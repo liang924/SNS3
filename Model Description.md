@@ -194,7 +194,7 @@ Interfaces with the physical transmission channels.
   - `SatLinkResults`: Stores evaluation results of link quality.
   - `SatInterference`: Detects and handles interference data.
 
-## 📌 Architecture Highlights
+### Architecture Highlights
 
 - `SatNetDevice` encapsulates the complete stack from classification to physical transmission.
 - The **LLC layer** supports bidirectional operations via separate **Tx** and **Rx** modules, ensuring full-duplex communication.
