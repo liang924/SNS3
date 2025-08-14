@@ -29,6 +29,21 @@
 | `satellite-ut-helper.h` | General UT helper for NetDevice, MAC/PHY, and GW/NCC connection. |
 | `simulation-helper.h` | Builds full satellite simulation scenario with traffic, topology, and statistics. |
 
+> ### module/
+
+| File Name                      | Description |
+|-------------------------------|-------------|
+| `satellite-net-device.h`      | Defines the `SatNetDevice` class, integrating PHY, MAC, and LLC layers. Supports packet transmission, control message handling, error modeling, callbacks, and link/interface information for satellite terminals and gateways. |
+| `satellite-mac.h`             | Handles uplink/downlink data and control messages. Manages MAC initialization, activation, scheduling, and mode switching between Transparent and Regenerative. |
+| `satellite-phy.h`             | Provides the base PHY class for satellite systems. Manages antenna gain, Tx power, noise/interference models, packet reception/transmission, and performance metrics such as SINR/C/N₀. |
+| `satellite-llc.h`             | Defines the LLC layer base class (`SatLlc`) for packet encapsulation, segmentation, ARQ, and upper/lower layer data exchange. Connects NetDevice with MAC for both UT and GW implementations. |
+| `satellite-packet-classifier.h` | Classifies packets into different QoS flows based on IP DSCP or control type, aiding flow scheduling and resource handling. |
+| `satellite-node-info.h`       | Container for node-specific info like node ID, MAC address, and node type (UT, SAT, GW, etc.), accessible by PHY/MAC/LLC. |
+| `satellite-control-message.h` | Defines all satellite control message types (e.g., ARQ ACK, CR, TBTP, C/N₀ reports). Includes base class, type tags, and message container for managing control message lifecycles. |
+| `satellite-frame-conf.h`      | Contains time/frame configuration classes for BTU, slots, frames, and superframes. Enables multi-layer time-frequency resource management. |
+| `satellite-frame-allocator.h` | Implements frame-level resource allocation logic. Handles CRA/RBDC/VBDC requests, waveform assignment, symbol mapping, and TBTP generation per frame. |
+| `satellite-enums.h`           | Defines enums for various satellite types, node roles, message formats, and protocol settings used across the system. |
+
 ## Use a table to list important libraries and parameter definitions (Configuration). 
 ## Use a main program flow chart to explain the sequence between the program architecture and key functions. 
 ## Use a system architecture diagram to explain the important functional blocks and modules of the program. 
