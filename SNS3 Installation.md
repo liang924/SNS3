@@ -2,7 +2,6 @@
 
 > Reference :
 > - https://github.com/sns3/sns3-satellite?tab=readme-ov-file#bake
-> - https://sixth-handball-b2f.notion.site/SNS3-installation-237cecc6b77180dd9bcde8ddc631767e
 
 ### Create & Enter Project Folder
 ```
