@@ -55,7 +55,7 @@ git checkout 3.43
 ```
 Then you need to configure CMake and ask it to build NS-3. It will automatically build all modules found in contrib:
 ```
-cd ns-3.43
+cd ~/ns-3.43
 ./ns3 clean
 ./ns3 configure --build-profile=optimized --enable-examples --enable-tests
 ./ns3 build
