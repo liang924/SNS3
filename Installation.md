@@ -1,9 +1,12 @@
 # SNS3 Installation
-## Create a file
+## Install dependency
 ```
-mkdir ns-3.43
-cd ~/ns-3.43
+sudo apt update && sudo apt install -y git automake cmake qtbase5-dev python3-dev python3-pip libxml2-dev mercurial graphviz libgraphviz-dev
+sudo apt install -y build-essential cmake g++ gcc gdb git
+pip3 install numpy matplotlib scipy pybind11
+
 ```
+
 ## CMake
 If you wish to have finer control over what is being compiled, you can handle the download process of the dependencies yourself and use CMake directly to build NS-3.
 
