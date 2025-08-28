@@ -62,7 +62,7 @@ export LD_LIBRARY_PATH=$BAKE_HOME/build/lib
 ```
 ```
 cd bake
-./bake.py configure -e ns-allinone-3.44
+./bake.py configure -e ns-allinone-3.43
 ./bake.py check
 ```
 **Output**
@@ -79,9 +79,8 @@ cd bake
 
 ### Configure ns3
 ```
-cd source/ns-3.44
+cd source/ns-3.43
 ./ns3 clean
-./ns3 configure --build-profile=debug --enable-examples --enable-tests
 ./ns3 configure --build-profile=debug --enable-examples --enable-tests
 ```
 **Output**
@@ -96,27 +95,26 @@ git clone https://github.com/sns3/sns3-satellite.git satellite
 git clone https://github.com/sns3/traffic.git traffic
 git clone https://github.com/sns3/stats.git magister-stats
 ```
-> Note: When retrieving the satellite, traffic, and magister-stats modules, you should place them under the ns-3.44/contrib/ folder.
+> Note: When retrieving the satellite, traffic, and magister-stats modules, you should place them under the ns-3.43/contrib/ folder.
 > You can do this by cloning them directly in this folder, copying them here after downloading, or using symbolic links.
 > Make sure that all repositories are using compatible versions. The best way to ensure this is to use the same tag on all repositories.
-> For the latest release, please use: ns-3.44.
 >
 > -  On NS-3 repository:
 >   ```
->   # Go into the satellite module and switch to 3.44
->   cd ~/workspace/bake/source/ns-3.44/contrib/satellite
->   git checkout 3.44
+>   # Go into the satellite module and switch to 3.43
+>   cd ~/workspace/bake/source/ns-3.43/contrib/satellite
+>   git checkout 3.43
 >   # Go back to contrib and enter the traffic module
 >   cd ../traffic
->   git checkout 3.44
+>   git checkout 3.43
 >   # Go back to contrib again and enter the magister-stats module
 >   cd ../magister-stats
->   git checkout 3.44
+>   git checkout 3.43
 
 ### Configure CMake and ask it to build NS-3 
 It will automatically build all modules found in contrib:
 ```
-cd ns-3.44
+cd ns-3.43
 ./ns3 clean
 ./ns3 configure --build-profile=optimized --enable-examples --enable-tests
 ./ns3 build
