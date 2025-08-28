@@ -108,7 +108,7 @@ Once you compiled SNS-3 successfully, you will need an extra step before being a
 
 These data are available as a separate repository and bundled as a submodule in SNS-3. You can download them afterwards in the satellite repository using:
 ```
-cd source/ns-3.43/contrib/satellite
+cd ns-3.43/contrib/satellite
 git submodule update --init --recursive
 ```
 
