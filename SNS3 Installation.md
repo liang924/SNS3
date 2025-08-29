@@ -204,29 +204,42 @@ cd ~/workspace/bake/source/ns-3.43
 863 of 863 tests passed (863 passed, 0 skipped, 0 failed, 0 crashed, 0 valgrind errors)
 ```
 
-Running SNS-3
+### Running SNS-3
 A scenario can be launched as follows:
-
-$ ./ns3 run <ns3-program>
+```
+./ns3 run <ns3-program>
+```
 If command line arguments are needed, the command becomes:
-
-$ ./ns3 run <ns3-program> -- --arg1=value1 --arg2=value2
+```
+./ns3 run <ns3-program> -- --arg1=value1 --arg2=value2
+```
 To list all the available command line arguments of a scenario, run:
-
-$ ./ns3 run <ns3-program> -- --PrintHelp
+```
+./ns3 run <ns3-program> -- --PrintHelp
+```
 If debug mode is enabled, gdb can be used:
+```
+./ns3 run --gdb <ns3-program>
+```
 
-$ ./ns3 run --gdb <ns3-program>
-SNS-3 is delivered with several examples. Each one allows to demonstrate one or several functionalities of SNS-3. Statistics are generated in the data/sims/<ns3-program> folder.
+### SNS-3 is delivered with several examples. Each one allows to demonstrate one or several functionalities of SNS-3. Statistics are generated in the data/sims/<ns3-program> folder.
 
 The main examples are:
 
-sat-cbr-example.cc: Simple example with CBR traffic
-sat-regeneration-example.cc: Example to test several regeneration modes on satellite: transparent, physical, link or network. By default, all simulations use one transparent satellite
-sat-constellation-example.cc: Example with LEO and GEO satellite constellations. ISLs are used to route packets between satellites, with static routing
-sat-vhts-example.cc: Create a VHTS scenario (high throughputs and high link capacities)
-sat-iot-example.cc: Create an IoT scenario (low throughputs and low link capacities)
-sat-logon-example.cc: Use the logon functionality to log the UTs on the NCC. Traffic on return channels is not send before UT is logged
-sat-ncr-example.cc: Use NCR synchronization between UTs and GWs. UT clock is generally cheap, and need to be resynchronized periodically by the NCC to correctly schedule sending of frames on return channel
-sat-lora-example.cc: Create a scenario with Lora configuration, and on transparent satellite. Lora is a LPWAN protocol developed for IoT
-sat-lora-regenerative-example.cc: Create a scenario with Lora configuration and regenerative satellites
+- `sat-cbr-example.cc`: Simple example with CBR traffic
+  
+- `sat-regeneration-example.cc`: Example to test several regeneration modes on satellite: transparent, physical, link or network. By default, all simulations use one transparent satellite
+  
+- `sat-constellation-example.cc`: Example with LEO and GEO satellite constellations. ISLs are used to route packets between satellites, with static routing
+  
+- `sat-vhts-example.cc`: Create a VHTS scenario (high throughputs and high link capacities)
+  
+- `sat-iot-example.cc`: Create an IoT scenario (low throughputs and low link capacities)
+
+- `sat-logon-example.cc`: Use the logon functionality to log the UTs on the NCC. Traffic on return channels is not send before UT is logged
+
+- `sat-ncr-example.cc`: Use NCR synchronization between UTs and GWs. UT clock is generally cheap, and need to be resynchronized periodically by the NCC to correctly schedule sending of frames on return channel
+  
+- `sat-lora-example.cc`: Create a scenario with Lora configuration, and on transparent satellite. Lora is a LPWAN protocol developed for IoT
+  
+- `sat-lora-regenerative-example.cc`: Create a scenario with Lora configuration and regenerative satellites
