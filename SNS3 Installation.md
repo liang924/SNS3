@@ -195,9 +195,10 @@ Submodule path 'data': checked out 'da089030e20e7857a00d72c764aee40306dc0ee1'
 ```
 
 ### Testing SNS-3
-
+```
 cd ~/workspace/bake/source/ns-3.43
 ./test.py --no-build
+```
 
 **Output**
 ```
