@@ -29,15 +29,15 @@ Config::SetDefault("ns3::SatEnvVariables::EnableSimulationOutputOverwrite", Bool
 Config::SetDefault("ns3::SatHelper::ScenarioCreationTraceEnabled", BooleanValue(true));
 Config::SetDefault("ns3::SatHelper::PacketTraceEnabled", BooleanValue(true));
 
-// Read CLI arguments
+// read command line parameters given by user
 CommandLine cmd;
-cmd.AddValue("packetSize", ...);
-cmd.AddValue("dataRate", ...);
-cmd.AddValue("onTime", ...);
-cmd.AddValue("offTime", ...);
-cmd.AddValue("sender", ...);
-cmd.AddValue("scenario", ...);
-cmd.AddValue("simDuration", ...);
+cmd.AddValue("packetSize", "Size of constant packet (bytes e.g 512)", packetSize);
+cmd.AddValue("dataRate", "Data rate (e.g. 500kb/s)", dataRate);
+cmd.AddValue("onTime", "Time for packet sending is on in seconds, (e.g. (1.0)", onTime);
+cmd.AddValue("offTime", "Time for packet sending is off in seconds, (e.g. (0.5)", offTime);
+cmd.AddValue("sender", "Packet sender (ut, gw, or both).", sender);
+cmd.AddValue("scenario", "Test scenario to use. (simple, larger or full", scenario);
+cmd.AddValue("simDuration", "Duration of the simulation (Time)", simDuration);
 simulationHelper->AddDefaultUiArguments(cmd);
 cmd.Parse(argc, argv);
 ```
@@ -51,15 +51,15 @@ simulationHelper->LoadScenario("geo-33E");
 ### 5.Create satellite scenario
 
 ```
-SatHelper::PreDefinedScenario_t satScenario = SatHelper::SIMPLE;
+SatHelper::PreDefinedScenario_t satScenario = SatHelper::SIMPLE;  --66
 
 if (scenario == "larger") {
     satScenario = SatHelper::LARGER;
 } else if (scenario == "full") {
     satScenario = SatHelper::FULL;
-}
+}   --84~91
 
-simulationHelper->CreateSatScenario(satScenario);
+simulationHelper->CreateSatScenario(satScenario);  --105
 ```
 
 ### 6.Install network devices and connect channels
@@ -67,7 +67,7 @@ simulationHelper->CreateSatScenario(satScenario);
 > These steps are called inside CreateSatScenario():
 
 ```
-// Inside CreateSatScenario()
+// Inside CreateSatScenario()  --105
 SatHelper::InstallNetDevices();
 SatHelper::InstallChannels();
 ```
@@ -111,7 +111,7 @@ if (sender == "ut" || sender == "both") {
 > This is implicitly done inside SetOutputTag() or by AddOnOffTraffic():
 
 ```
-simulationHelper->SetOutputTag(scenario);
+simulationHelper->SetOutputTag(scenario);   --81
 // internally triggers SatStatsHelperContainer creation
 ```
 
