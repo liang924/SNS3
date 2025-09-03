@@ -29,3 +29,11 @@ It is used to quickly verify whether the forward/return links operate correctly,
 | `--beamIdInFullScenario` | Integer (default `10`) | **Only used in `--scenario=full`**: selects which beam’s UT/GW pair to use for the CBR traffic. In full scenarios with many beams, this identifies the target beam. |
 | `--OutputPath` | Directory path | Directory where statistics/results are stored. It is recommended to use different subfolders for different runs. |
 | `--PrintHelp` and other General | `--PrintHelp`, `--PrintGlobals`, `--PrintGroups`, `--PrintTypeIds`… | Queries help or lists ns-3 type/attribute information. **Does not actually run the simulation.** |
+
+# `--scenario` Options
+
+| Option   | Description                                                                 | Typical Use Case                                |
+|----------|-----------------------------------------------------------------------------|------------------------------------------------|
+| **simple** (default) | Minimal configuration with **1 beam, 1 gateway, and 1 UT**. Quick to run and easy to verify. | Basic testing, verifying environment setup. |
+| **larger** | Medium-scale scenario with **multiple beams and UTs**, but still simplified topology. | Studying regeneration modes or scheduling in multi-user cases. |
+| **full** | Complete and complex topology with **multiple beams, multiple UTs, and multiple gateways**. Requires `--beamIdInFullScenario` to select beam/UT/GW pairing. | Realistic experiments, detailed performance evaluation. |
