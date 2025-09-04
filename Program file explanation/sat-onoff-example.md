@@ -162,4 +162,28 @@ simulationHelper->SetOutputTag(scenario);
 
 5. NodeContainer 與節點
 
-6. 
+📍 在 SatHelper 中你可以找到：
+
+```
+Ptr<Node> gateway = CreateObject<Node>();
+NodeContainer utUsers = CreateObject<NodeContainer>();
+Ptr<Node> satellite = CreateObject<Node>();
+```
+
+6. SatNetDevice / SatGeoNetDevice
+
+📍 這段在 SatHelper::InstallNetDevices() 裡：
+```
+Ptr<NetDevice> dev = CreateObject<SatNetDevice>();
+node->AddDevice(dev);
+```
+衛星會安裝 SatGeoNetDevice，地面節點（UT/GW）會安裝 SatNetDevice。
+
+7. SatChannel
+
+📍 在 SatHelper::InstallChannels() 中：
+```
+Ptr<SatChannel> channel = CreateObject<SatChannel>();
+satNetDevice->SetChannel(channel);
+```
+所有節點的裝置透過這個 Channel 連線，用來模擬延遲、頻寬、干擾等傳輸條件。
