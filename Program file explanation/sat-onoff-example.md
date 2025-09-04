@@ -1,3 +1,4 @@
+## Main Execution Flow of sat-onoff-example.cc
 
 <img width="480" height="678" alt="image" src="https://github.com/user-attachments/assets/0a1bc924-c6cf-4b47-80da-c2fbeae2905a" />
 
@@ -121,3 +122,44 @@ simulationHelper->SetOutputTag(scenario);   --81
 simulationHelper->RunSimulation();
 ```
 
+## System architecture
+<img width="869" height="656" alt="image" src="https://github.com/user-attachments/assets/ce271a73-76fc-4124-8cf3-8933b36f8686" />
+
+1. SimulationHelper
+
+```
+auto simulationHelper = CreateObject<SimulationHelper>("example-onoff");
+```
+這個類別是整個模擬的主控制器，所有場景建構、應用安裝、執行模擬等都透過它進行。
+
+2. SatHelper
+
+```
+simulationHelper->CreateSatScenario(satScenario);
+```
+由 SimulationHelper 呼叫，用來節點建立（GW/UT/Sat),裝置安裝（NetDevice),通道連線（SatChannel）
+
+3. SatTrafficHelper
+
+```
+simulationHelper->GetTrafficHelper()->AddOnOffTraffic(...);
+```
+
+> 這個 GetTrafficHelper() 回傳的物件就是 SatTrafficHelper，負責：
+> - 安裝 OnOffApplication
+> - 設定 PacketSink
+> - 指定應用參數（資料率、on/off 時間等）
+
+4. SatStatsHelperContainer
+
+```
+simulationHelper->SetOutputTag(scenario);
+```
+> 它負責記錄：
+> - 每秒吞吐量
+> - 封包數量
+> - 延遲等資訊
+
+5. NodeContainer 與節點
+
+6. 
