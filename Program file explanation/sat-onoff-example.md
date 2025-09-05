@@ -130,14 +130,19 @@ simulationHelper->RunSimulation();
 ```
 auto simulationHelper = CreateObject<SimulationHelper>("example-onoff");
 ```
-這個類別是整個模擬的主控制器，所有場景建構、應用安裝、執行模擬等都透過它進行。
+This class serves as the main controller of the entire simulation.  
+All scenario construction, application installation, and simulation execution are performed through this component.
 
 2. SatHelper
 
 ```
 simulationHelper->CreateSatScenario(satScenario);
 ```
-由 SimulationHelper 呼叫，用來節點建立（GW/UT/Sat),裝置安裝（NetDevice),通道連線（SatChannel）
+Called by `SimulationHelper`, this class is responsible for:
+
+- Creating nodes (Gateway, User Terminal, Satellite)
+- Installing devices (`NetDevice`)
+- Connecting devices via channels (`SatChannel`)
 
 3. SatTrafficHelper
 
@@ -145,24 +150,23 @@ simulationHelper->CreateSatScenario(satScenario);
 simulationHelper->GetTrafficHelper()->AddOnOffTraffic(...);
 ```
 
-> 這個 GetTrafficHelper() 回傳的物件就是 SatTrafficHelper，負責：
-> - 安裝 OnOffApplication
-> - 設定 PacketSink
-> - 指定應用參數（資料率、on/off 時間等）
+>　This method returns a `SatTrafficHelper` object, which is responsible for:
+>　- Installing `OnOffApplication`
+>　- Setting up `PacketSink`
+>　- Configuring application parameters (e.g., data rate, on/off time, etc.)
 
 4. SatStatsHelperContainer
 
 ```
 simulationHelper->SetOutputTag(scenario);
 ```
-> 它負責記錄：
-> - 每秒吞吐量
-> - 封包數量
-> - 延遲等資訊
+> It is responsible for recording:
+> - Throughput per second  
+> - Number of packets  
+> - Latency and related information
 
-5. NodeContainer 與節點
-
-📍 在 SatHelper 中你可以找到：
+5. NodeContainer & Node 
+📍 You can find the following in `SatHelper`:
 
 ```
 Ptr<Node> gateway = CreateObject<Node>();
@@ -172,12 +176,12 @@ Ptr<Node> satellite = CreateObject<Node>();
 
 6. SatNetDevice / SatGeoNetDevice
 
-📍 這段在 SatHelper::InstallNetDevices() 裡：
+📍 This section is in `SatHelper::InstallNetDevices()`:
 ```
 Ptr<NetDevice> dev = CreateObject<SatNetDevice>();
 node->AddDevice(dev);
 ```
-衛星會安裝 SatGeoNetDevice，地面節點（UT/GW）會安裝 SatNetDevice。
+The satellite installs `SatGeoNetDevice`, while ground nodes (UT/GW) install `SatNetDevice`.
 
 7. SatChannel
 
@@ -186,4 +190,144 @@ node->AddDevice(dev);
 Ptr<SatChannel> channel = CreateObject<SatChannel>();
 satNetDevice->SetChannel(channel);
 ```
-所有節點的裝置透過這個 Channel 連線，用來模擬延遲、頻寬、干擾等傳輸條件。
+All node devices are connected through this `Channel`, which is used to simulate transmission conditions such as delay, bandwidth, and interference.
+
+## Message Sequence Chart (MSC)
+
+### 1️⃣ `SimulationHelper → SatHelper`: `CreateScenario()`
+
+**Meaning:**  
+The main simulation controller (`SimulationHelper`) calls `SatHelper` to begin building the scenario. This includes creating nodes and installing devices.
+
+**Code:**
+```cpp
+simulationHelper->CreateSatScenario(satScenario);
+```
+
+---
+
+### 2️⃣ `SatHelper → NetDevices`: `CreateNodes()`
+
+**Meaning:**  
+`SatHelper` creates the following nodes:
+- Gateway Node (GW)
+- User Terminal Node (UT)
+- Satellite Node
+
+**Code:**
+```cpp
+SatHelper::CreateNodes();  // Indirectly called in CreateSatScenario()
+```
+
+You can find `CreateObject<Node>()` in `sat-helper.cc`.
+
+---
+
+### 3️⃣ `SatHelper → NetDevices`: `InstallDevices()`
+
+**Meaning:**  
+Each node gets the appropriate NetDevice installed:
+- GW/UT → `SatNetDevice`
+- Satellite → `SatGeoNetDevice`
+
+**Code:**
+```cpp
+SatHelper::InstallNetDevices();
+netDevice = CreateObject<SatNetDevice>();
+gwNode->AddDevice(netDevice);
+```
+
+---
+
+### 4️⃣ `NetDevices → SatChannel`: `create channel`
+
+**Meaning:**  
+Devices are interconnected through `SatChannel`.
+
+**Code:**
+```cpp
+Ptr<SatChannel> satChannel = CreateObject<SatChannel>();
+netDevice->SetChannel(satChannel);
+```
+
+---
+
+### 5️⃣ `TrafficHelper → GW/UT Nodes`: `InstallApps()`
+
+**Meaning:**  
+Applications are installed on GW/UT nodes:
+- `OnOffApplication` (for data generation)
+- `PacketSink` (for data reception)
+
+**Code:**
+```cpp
+simulationHelper->GetTrafficHelper()->AddOnOffTraffic(...);
+```
+
+This is typically inside an `if (sender == "gw" || sender == "both")` block in the main program.
+
+---
+
+### 6️⃣ `StatsHelper → GW/UT Nodes`: `CollectStats()`
+
+**Meaning:**  
+The `SatStatsHelperContainer` begins to collect metrics such as throughput and delay.
+
+**Code:**
+```cpp
+simulationHelper->SetOutputTag(scenario);  // Triggers statsHelperContainer creation/registration
+```
+
+---
+
+### 7️⃣ `SimulationHelper → Simulator`: `Simulator::Run()`
+
+**Meaning:**  
+Starts the simulation execution.
+
+**Code:**
+```cpp
+simulationHelper->RunSimulation();
+```
+
+---
+
+### 8️⃣ `GW/UT/Sat Nodes → NetDevices → SatChannel`: `Send Packets using channel`
+
+**Meaning:**  
+`OnOffApplication` sends packets through `NetDevice` via `SatChannel`.
+
+**Code:**
+```cpp
+onOffApp->SetStartTime(Seconds(1.0));
+```
+
+Actual chain:  
+`OnOffApplication::StartApplication()` → `SendPacket()` → `Socket::SendTo()` → `NetDevice::Send()`
+
+---
+
+### 9️⃣ `SatChannel → NetDevices → GW/UT/Sat Nodes`: `Recv Packets using channel`
+
+**Meaning:**  
+Packets are received by the destination's `NetDevice` and passed to `PacketSink`.
+
+**Code Chain:**
+```cpp
+SatChannel::Transmit() → NetDevice::Receive() → PacketSink::HandleRead()
+```
+
+---
+
+### 🔟 `GW/UT/Sat Nodes → StatsHelper`: `Collect throughput/delay results`
+
+**Meaning:**  
+Packet arrival time and size are recorded to compute average throughput and delay.
+
+**Code:**
+```cpp
+device->TraceConnectWithoutContext("PhyTxBegin", ...);
+```
+This is handled in the `TraceSink()` function inside `SatStatsHelperContainer`.
+
+---
