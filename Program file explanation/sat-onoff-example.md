@@ -194,6 +194,8 @@ All node devices are connected through this `Channel`, which is used to simulate
 
 ## Message Sequence Chart (MSC)
 
+<img width="982" height="405" alt="image" src="https://github.com/user-attachments/assets/d60be440-580c-41d8-bce2-29582ffadc69" />
+
 ### 1️⃣ `SimulationHelper → SatHelper`: `CreateScenario()`
 
 **Meaning:**  
