@@ -1,6 +1,12 @@
 ## Flowchart
 <img width="857" height="560" alt="image" src="https://github.com/user-attachments/assets/a3a044d2-ad9a-47ba-bfa2-3aa8243ac477" />
 
+> [satellite-user-helper.cc](https://github.com/sns3/sns3-satellite/blob/0fc2b8c74f0d9c2b0c3ee4ed132064a40ad2daf1/helper/satellite-user-helper.cc)
+>
+> [satellite-helper.cc](https://github.com/sns3/sns3-satellite/blob/0fc2b8c74f0d9c2b0c3ee4ed132064a40ad2daf1/helper/satellite-helper.cc)
+>
+> [satellite-beam-helper.cc](https://github.com/sns3/sns3-satellite/blob/0fc2b8c74f0d9c2b0c3ee4ed132064a40ad2daf1/helper/satellite-beam-helper.cc)
+
 1. Example main
 > In the examples/ folder, there are multiple example programs.Each of these examples represents a different simulation scenario, but the flow always calls SatHelper and SatBeamHelper to install devices and assign beams.In other words, regardless of which example is used, the entry point is always main(), with the difference lying in the simulation configuration (Lora / Return link / Forward link).
 
