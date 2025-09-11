@@ -9,7 +9,24 @@
 - Create **BBFrame Container** and **C/N₀ Estimator** container.  
 - Start the **periodic timer**.  
 - After initialization, enter **Idle**: waiting for either “timer expiry” or “MAC request for next frame”.
+```
+SatFwdLinkScheduler::SatFwdLinkScheduler(Ptr<SatBbFrameConf> conf,
+                                         Mac48Address address,
+                                         double carrierBandwidthInHz)
+    : m_macAddress(address),
+      m_bbFrameConf(conf),
+      m_additionalSortCriteria(SatFwdLinkScheduler::NO_SORT),
+      m_cnoEstimatorMode(SatCnoEstimator::LAST),
+      m_carrierBandwidthInHz(carrierBandwidthInHz)
+{
+    NS_LOG_FUNCTION(this);
 
+    ObjectBase::ConstructSelf(AttributeConstructionList());
+
+    // Random variable used in scheduling
+    m_random = CreateObject<UniformRandomVariable>();
+}
+```
 ---
 
 ## 2) Path A: Timer Expiry → Scheduling Round
