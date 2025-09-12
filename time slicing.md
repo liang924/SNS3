@@ -101,3 +101,4 @@ SatFwdLinkSchedulerTimeSlicing::SendTimeSliceSubscription(Mac48Address address,
 - It sets the slice ID and the user’s MAC address via SetSliceId() and SetAddress().
 - It then calls the m_sendControlMsgCallback function to send the control message, typically using broadcast, so that the intended UTs know which slice they are assigned to.
 
+<img width="1704" height="545" alt="image" src="https://github.com/user-attachments/assets/b98c89cd-c0b7-4ccf-9503-7e3c5a479d64" />
