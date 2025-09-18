@@ -147,7 +147,7 @@ export NS_LOG+=":SatBeamScheduler=level_all|prefix_time"
 
 ./ns3 run scratch/sat-fwd-system-test-example
 ```
-**Output :**
+**Output :** (Low-level internal trace, showing that objects are created, used, and released in memory.)
 ### 1. Old Frame Handling and Release
 ```
 +5.960551104s SatBbFrame:GetPayload(0x5e8f6e0527f0)
@@ -196,3 +196,55 @@ A single Forward Link Scheduling cycle follows these steps:
 - Multiple calls to GetPayload() → due to upper/lower layers accessing payload.
 - Multiple calls to GetSpaceUsedInBytes() → triggered each time a packet is inserted.
 - These can be summarized as “Frame check → payload insertion → update status.”
+
+**Output** (High-level trace: shows when a complete BBFrame is actually packed by the scheduler and transmitted.)
+
+> command:
+> 1. Create a dedicated folder for logs
+> ```
+> mkdir -p ~/sns3_logs/fwd_test
+> ```
+> 2. Run the forward link test program
+> ```
+> ./ns3 run "sat-fwd-system-test-example --simLength=10 --traceFrameInfo=true"
+> ```
+> --simLength=10 → simulate for 10 seconds
+> 
+> --traceFrameInfo=true → enable BBFrame trace output (this is the key)
+>
+> 3. Save the output into a file
+> ```
+> ./ns3 run "sat-fwd-system-test-example --simLength=10 --traceFrameInfo=true" > ~/sns3_logs/fwd_test/run1.log
+> ```
+> 4. Check the log file
+> ```
+> cat ~/sns3_logs/fwd_test/run1.log
+> ```
+
+```
+[BBFrameTx] Time: 9.99912, Frame Type: NORMAL_FRAME, ModCod: QPSK_1_TO_2, Occupancy: 1, Duration: +3.19507e+06ns, Space used: 4050, Space Left: 0 [Receivers: 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17, 00:00:00:00:00:17]
+```
+- Time: 9.99912
+  Simulation time in seconds. This BB frame was transmitted at approximately t ≈ 9.99912 s.
+
+- Frame Type: NORMAL_FRAME
+  The BB frame is a Normal frame under DVB-S2/S2X (not Short or Dummy).
+
+- ModCod: QPSK_1_TO_2
+  Modulation and coding scheme: QPSK with code rate 1/2.
+  This determines the frame’s payload capacity and duration (looked up by SatBbFrameConf based on ModCod + FrameType).
+
+- Occupancy: 1
+  Occupancy = 1.0, meaning the frame is completely filled (no remaining space).
+
+- Duration: +3.19507e+06 ns
+  Frame duration ≈ 3.19507 ms.
+  This is derived from `GetBbFrameDuration`(modcod, type).
+
+- Space used: 4050 B, Space Left: 0 B
+  The frame payload carried 4050 bytes in total, with no remaining capacity (consistent with Occupancy = 1).
+
+- Receivers: 00:00:00:00:00:17 (repeated multiple times)
+  The frame contained multiple PDUs/packets, all directed to the same receiver MAC.
+  In your topology dump earlier, 00:00:00:00:00:17 corresponds to UT ID = 8 (satellite 1, beam 30, linked to GW 00:...:05).
+  So this frame is unicast to one UT, just carrying multiple packets for that single user.
