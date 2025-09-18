@@ -1,4 +1,5 @@
-<img width="805" height="732" alt="image" src="https://github.com/user-attachments/assets/ccb63340-4385-487f-bccd-a84331029b26" />
+<img width="844" height="758" alt="image" src="https://github.com/user-attachments/assets/fc8e8780-f2e2-47c2-94e6-492b47bb5acb" />
+
 
 ## Running `sat-constellation-example`
 
