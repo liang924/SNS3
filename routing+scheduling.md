@@ -111,7 +111,7 @@ UT users
 - GW users (IDs 14–16) → represent end-host applications behind the GWs.
 - UT users (IDs 5–12) → represent end-host applications behind the UTs.
 - 👉 These IDs are not physical devices but logical application nodes.
-==================
+
 ### 5. SatIdMapper (MAC → Satellite ID)
 ```
 SatIdMapper GW/UT MAC to satellite ID map
@@ -128,3 +128,71 @@ SatIdMapper GW/UT MAC to satellite ID map
   - `...:05` → belongs to SAT 0.
   - `...:1a` → belongs to SAT 1.
   - `...:0c` (UT 4) → belongs to SAT 0.
+
+
+## Running `sat-fwd-system-test-example`
+
+**Command :**
+```
+cd ~/workspace/bake/source/ns-3.43
+
+# 打開 Forward Link Scheduler 的所有訊息
+export NS_LOG="SatFwdLinkScheduler=level_all|prefix_time"
+
+# 如果要同時觀察 BBFrame
+export NS_LOG+=":SatBbFrame=level_all|prefix_time"
+
+# 如果要觀察 Beam Scheduler
+export NS_LOG+=":SatBeamScheduler=level_all|prefix_time"
+
+./ns3 run scratch/sat-fwd-system-test-example
+```
+**Output :**
+### 1. Old Frame Handling and Release
+```
++5.960551104s SatBbFrame:GetPayload(0x5e8f6e0527f0)
++5.960551104s SatBbFrame:GetPayload(0x5e8f6e0527f0)
++5.960551104s SatBbFrame:~SatBbFrame(0x5e8f6e0527f0)
+```
+
+- Action: The scheduler retrieves the payload (`GetPayload`) to pass it to the PHY/MAC layer for transmission.
+- Destructor (`~SatBbFrame`): Indicates the frame is no longer needed, and memory is released.
+- Meaning: The forward link transmission cycle finishes for this frame, and the system prepares for the next scheduling round.
+
+### 2. New Scheduling Round Begins
+```
++5.973331392s SatFwdLinkScheduler:SortSchedulingObjects(0x5e8f634c5f00)
++5.973331392s SatFwdLinkScheduler:GetSchedulingObjectCno(0x5e8f634c5f00, 0x5e8f6cdede80)
+```
+
+- SortSchedulingObjects: Orders all candidate scheduling objects (users/flows).
+- GetSchedulingObjectCno: Fetches C/N₀ (Carrier-to-Noise density ratio), representing channel quality for each object.
+- Meaning: This step decides who gets served first, usually based on channel quality (CQI) or fairness criteria.
+
+### 3. Frame Space Check and Payload Filling
+```
++5.973331392s SatBbFrame:GetSpaceUsedInBytes(0x5e8f6de91b50)
++5.973331392s SatBbFrame:AddPayload(0x5e8f6de91b50)
++5.973331392s SatBbFrame:GetSpaceLeftInBytes(0x5e8f6de91b50)
+```
+
+- GetSpaceUsedInBytes: Checks how much of the BBFrame is already occupied.
+- AddPayload: Places a user’s packet into the frame.
+- GetSpaceLeftInBytes: Updates the remaining capacity.
+- Meaning: The scheduler translates the scheduling decision into an actual physical transmission unit (BBFrame).
+
+### 4. Full Scheduling Cycle
+
+A single Forward Link Scheduling cycle follows these steps:
+
+1. Frame cleanup → old BBFrame payload is transmitted and freed.
+2. Scheduling order → sort users/flows based on C/N₀ or policy.
+3. Payload filling → selected users’ packets are added to the new BBFrame.
+4. Capacity check → repeat until the frame is full or time expires.
+5. Frame dispatch → completed BBFrame is sent, then cycle restarts.
+
+### 5.Repeated Calls (Simplification)
+
+- Multiple calls to GetPayload() → due to upper/lower layers accessing payload.
+- Multiple calls to GetSpaceUsedInBytes() → triggered each time a packet is inserted.
+- These can be summarized as “Frame check → payload insertion → update status.”
