@@ -249,3 +249,5 @@ A single Forward Link Scheduling cycle follows these steps:
   The frame contained multiple PDUs/packets, all directed to the same receiver MAC.
   In your topology dump earlier, 00:00:00:00:00:17 corresponds to UT ID = 8 (satellite 1, beam 30, linked to GW 00:...:05).
   So this frame is unicast to one UT, just carrying multiple packets for that single user.
+
+./ns3 run satellite/examples/sat-rtn-system-test-example
