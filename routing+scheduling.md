@@ -11,89 +11,70 @@ cd ~/workspace/bake/source/ns-3.43
 **Output :**
 ### 1. Satellites
 ```
-Satellites
-  SAT: ID = 0, at 0.013043,7.20835,3.57864e+07
-    Devices to ground stations 
-      02-06-00:00:00:00:00:01
-        Feeder at 02-06-00:00:00:00:00:03, beam 30
-        Feeder at 02-06-00:00:00:00:00:09, beam 43
-      Feeder connected to
-        00:00:00:00:00:05
-        00:00:00:00:00:15
-        User at 02-06-00:00:00:00:00:04, beam 30
-        User at 02-06-00:00:00:00:00:0a, beam 43
-      User connected to
-        00:00:00:00:00:0c
-    ISLs 
-      02-06-00:00:00:00:00:23 to SAT 1
+Satellites                               # Satellite system information
+  SAT: ID = 0, at 0.013043,7.20835,3.57864e+07   # Satellite with ID=0, located at given coordinates (lat ,lon , alt)
+    Devices to ground stations           # Devices linked to ground stations
+      02-06-00:00:00:00:00:01            # Device identifier connected to satellite
+        Feeder at 02-06-00:00:00:00:00:03, beam 30   # Feeder terminal at address ending :03, using beam 30
+        Feeder at 02-06-00:00:00:00:00:09, beam 43   # Feeder terminal at address ending :09, using beam 43
+      Feeder connected to                # Feeders connected to specific ground nodes
+        00:00:00:00:00:05                # Ground node/device with ID ending :05
+        00:00:00:00:00:15                # Ground node/device with ID ending :15
+        User at 02-06-00:00:00:00:00:04, beam 30   # User terminal at :04, connected via beam 30
+        User at 02-06-00:00:00:00:00:0a, beam 43   # User terminal at :0a, connected via beam 43
+      User connected to                  # Users linked to downstream devices
+        00:00:00:00:00:0c                # Device or node with ID ending :0c
+    ISLs                                 # Inter-Satellite Links
+      02-06-00:00:00:00:00:23 to SAT 1   # ISL from device :23 on this satellite to satellite ID=1
 ```
-- ID = 0 → Satellite #0
-- at (0.013043, 7.20835, 3.57864e+07) → longitude, latitude, altitude (≈35,786 km, GEO orbit).
-- Devices to ground stations → list of radio interfaces that connect SAT 0 to GWs/UTs.
-  - Feeder = satellite-to-Gateway interface (beam 30 & 43).
-  - Feeder connected to ... = MAC addresses of ground GWs linked with this satellite.
-  - User at ... beam 30/43 = satellite-to-User Terminal interfaces.
-  - User connected to ...:0c = specific UT device currently attached to SAT 0.
-- ISLs → Inter-Satellite Link. SAT 0 has an ISL (...:23) connected to SAT 1.
 
 ```
-  SAT: ID = 1, at -0.0219759,47.7047,3.5779e+07
-    Devices to ground stations 
-      02-06-00:00:00:00:00:02
-        Feeder at 02-06-00:00:00:00:00:13, beam 30
-        Feeder at 02-06-00:00:00:00:00:18, beam 43
-      Feeder connected to
-        00:00:00:00:00:0b
-        00:00:00:00:00:1a
-        User at 02-06-00:00:00:00:00:14, beam 30
-        User at 02-06-00:00:00:00:00:19, beam 43
-      User connected to
-        00:00:00:00:00:16
-        00:00:00:00:00:17
-    ISLs 
-      02-06-00:00:00:00:00:24 to SAT 0
+SAT: ID = 1, at -0.0219759,47.7047,3.5779e+07   # Satellite with ID=1, located at given coordinates (lat ,lon , alt)
+    Devices to ground stations                  # Devices connected to ground stations
+      02-06-00:00:00:00:00:02                   # Device identifier assigned to this satellite
+        Feeder at 02-06-00:00:00:00:00:13, beam 30   # Feeder terminal at address ending :13, using beam 30
+        Feeder at 02-06-00:00:00:00:00:18, beam 43   # Feeder terminal at address ending :18, using beam 43
+      Feeder connected to                       # Feeders linked to ground nodes
+        00:00:00:00:00:0b                       # Ground node/device with ID ending :0b
+        00:00:00:00:00:1a                       # Ground node/device with ID ending :1a
+        User at 02-06-00:00:00:00:00:14, beam 30   # User terminal at :14, connected via beam 30
+        User at 02-06-00:00:00:00:00:19, beam 43   # User terminal at :19, connected via beam 43
+      User connected to                         # User terminals further connected to other devices
+        00:00:00:00:00:16                       # Device or node with ID ending :16
+        00:00:00:00:00:17                       # Device or node with ID ending :17
+    ISLs                                        # Inter-Satellite Links
+      02-06-00:00:00:00:00:24 to SAT 0          # ISL from device :24 on this satellite to satellite ID=0
+
 ```
-- ID = 1 → Satellite #1
-- at (-0.0219759, 47.7047, 3.5779e+07) → longitude, latitude, altitude.
-- Feeder interfaces → connected to beams 30 & 43.
-- Feeder connected to ... → MAC addresses of GWs for this satellite.
-- User connected to ...:16 and ...:17 → two UTs currently linked with SAT 1.
-- ISLs → SAT 1 is connected back to SAT 0 via ISL (...:24).
 
 ### 2. Gateways (GWs)
 ```
-GWs
-  GW: ID = 2, at 55.75,37.62,0
-  Devices 
-    02-06-00:00:00:00:00:0b, sat: 0, beam: 43
-    02-06-00:00:00:00:00:1a, sat: 1, beam: 43
-  GW: ID = 3, at 48.85,2.34,0
-  Devices 
-    02-06-00:00:00:00:00:05, sat: 0, beam: 30
-    02-06-00:00:00:00:00:15, sat: 1, beam: 30
+GWs                                         # Ground stations (Gateways) information
+  GW: ID = 2, at 55.75,37.62,0              # Gateway with ID=2, located at latitude 55.75, longitude 37.62, altitude 0
+  Devices                                   # Devices linked to this gateway
+    02-06-00:00:00:00:00:0b, sat: 0, beam: 43   # Device ID :0b, connected to Satellite 0 via beam 43
+    02-06-00:00:00:00:00:1a, sat: 1, beam: 43   # Device ID :1a, connected to Satellite 1 via beam 43
+  GW: ID = 3, at 48.85,2.34,0               # Gateway with ID=3, located at latitude 48.85, longitude 2.34, altitude 0 
+  Devices                                   # Devices linked to this gateway
+    02-06-00:00:00:00:00:05, sat: 0, beam: 30   # Device ID :05, connected to Satellite 0 via beam 30
+    02-06-00:00:00:00:00:15, sat: 1, beam: 30   # Device ID :15, connected to Satellite 1 via beam 30
+
 ```
-- GW ID = 2 → Located at (55.75, 37.62).
-- Connected to SAT 0 beam 43 and SAT 1 beam 43.
-- GW ID = 3 → Located at (48.85, 2.34).
-- Connected to SAT 0 beam 30 and SAT 1 beam 30.
 
 ### 3. User Terminals (UTs)
 ```
-UTs
-  UT: ID = 4, at 48.8534,2.3488,0
-  Devices 
-    02-06-00:00:00:00:00:0c, sat: 0, beam: 43. Linked to GW 02-06-00:00:00:00:00:1a
-  UT: ID = 7, at 55.755,37.6218,0
-  Devices 
-    02-06-00:00:00:00:00:16, sat: 1, beam: 30. Linked to GW 02-06-00:00:00:00:00:05
-  UT: ID = 8, at 55.754,37.621,0
-  Devices 
-    02-06-00:00:00:00:00:17, sat: 1, beam: 30. Linked to GW 02-06-00:00:00:00:00:05
+UTs                                              # User Terminals (UT) information
+  UT: ID = 4, at 48.8534,2.3488,0                # User Terminal with ID=4, located at latitude 48.8534, longitude 2.3488, altitude 0 
+  Devices                                        # Devices connected to this UT
+    02-06-00:00:00:00:00:0c, sat: 0, beam: 43. Linked to GW 02-06-00:00:00:00:00:1a   # Device :0c, connected to Satellite 0 via beam 43, linked to Gateway device :1a
+  UT: ID = 7, at 55.755,37.6218,0                # User Terminal with ID=7, located at latitude 55.755, longitude 37.6218, altitude 0 
+  Devices
+    02-06-00:00:00:00:00:16, sat: 1, beam: 30. Linked to GW 02-06-00:00:00:00:00:05   # Device :16, connected to Satellite 1 via beam 30, linked to Gateway device :05
+  UT: ID = 8, at 55.754,37.621,0                 # User Terminal with ID=8, located at latitude 55.754, longitude 37.621, altitude 0 
+  Devices
+    02-06-00:00:00:00:00:17, sat: 1, beam: 30. Linked to GW 02-06-00:00:00:00:00:05   # Device :17, connected to Satellite 1 via beam 30, linked to Gateway device :05
+
 ```
-- UT 4 → Connected via SAT 0, beam 43. Traffic is routed through GW (...:1a, belongs to SAT 1).
-- UT 7 → Connected via SAT 1, beam 30. Linked to GW (...:05, belongs to SAT 0).
-- UT 8 → Similar to UT 7, connected via SAT 1, beam 30 → GW (...:05).
-- 👉 Notice cross-links: UTs can connect to one satellite, but the serving GW may belong to another satellite (via ISL).
 
 ### 4. GW Users & UT Users
 ```
@@ -130,6 +111,7 @@ SatIdMapper GW/UT MAC to satellite ID map
   - `...:1a` → belongs to SAT 1.
   - `...:0c` (UT 4) → belongs to SAT 0.
 
+<img width="1118" height="746" alt="image" src="https://github.com/user-attachments/assets/38b5b9d4-55ae-444c-bf2d-f9659e5ec202" />
 
 ## Running `sat-fwd-system-test-example`
 
