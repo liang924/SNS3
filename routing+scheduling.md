@@ -130,7 +130,9 @@ export NS_LOG+=":SatBeamScheduler=level_all|prefix_time"
 
 ./ns3 run scratch/sat-fwd-system-test-example
 ```
-**Output :** (Low-level internal trace, showing that objects are created, used, and released in memory.)
+<img width="368" height="711" alt="image" src="https://github.com/user-attachments/assets/3552ef42-1ecc-40fa-bde5-ed914c6560bb" />
+
+**Output :** Internal Trace
 ### 1. Old Frame Handling and Release
 ```
 +5.960551104s SatBbFrame:GetPayload(0x5e8f6e0527f0)
@@ -180,7 +182,7 @@ A single Forward Link Scheduling cycle follows these steps:
 - Multiple calls to GetSpaceUsedInBytes() → triggered each time a packet is inserted.
 - These can be summarized as “Frame check → payload insertion → update status.”
 
-**Output** (High-level trace: shows when a complete BBFrame is actually packed by the scheduler and transmitted.)
+**Output** (bbframe summary)
 
 > command:
 > 1. Create a dedicated folder for logs
@@ -232,6 +234,36 @@ A single Forward Link Scheduling cycle follows these steps:
   In your topology dump earlier, 00:00:00:00:00:17 corresponds to UT ID = 8 (satellite 1, beam 30, linked to GW 00:...:05).
   So this frame is unicast to one UT, just carrying multiple packets for that single user.
 
+## Running `sat-rtn-system-test-example`
 ```
-./ns3 run satellite/examples/sat-rtn-system-test-example
+cd ~/workspace/bake/source/ns-3.43
+./ns3 run sat-rtn-system-test-example
+
 ```
+
+**Output**
+```
+115 Bytes allocated within TBTP
+130 Bytes allocated within TBTP
+115 Bytes allocated within TBTP
+115 Bytes allocated within TBTP
+115 Bytes allocated within TBTP
+130 Bytes allocated within TBTP 
+```
+
+### UT Scheduler (使用者端的排程)
+
+```
+NS_LOG="SatUtScheduler=level_all" ./ns3 run "sat-rtn-system-test-example --simLength=5"
+```
+
+- Call scheduling process
+```
+SatUtScheduler:GetPrioritizedRcIndexOrder(0x58ab35b0d1e0) UT scheduling RC: 0 with 130 bytes
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 1) UT scheduling RC: 0 with 130 bytes
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 2) UT scheduling RC: 0 with 130 bytes
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 3) Created a packet from RC: 3 size: 10 Created a packet from RC: 3 size: 119
+SatUtScheduler:DoScheduling(0x58ab35b1e030, 130, 0, 1) UT scheduling RC: 0 with 130 bytes
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b1e030, 130, 0)
+```
+- 
