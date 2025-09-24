@@ -258,13 +258,16 @@ cd ~/workspace/bake/source/ns-3.43
 NS_LOG="SatUtScheduler=level_all" ./ns3 run "sat-rtn-system-test-example --simLength=5"
 ```
 
-- Call scheduling process
+- Basic Architecture
 ```
-SatUtScheduler:GetPrioritizedRcIndexOrder(0x58ab35b0d1e0) UT scheduling RC: 0 with 130 bytes
-SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 1) UT scheduling RC: 0 with 130 bytes
+SatUtScheduler:GetPrioritizedRcIndexOrder(0x58ab35b0d1e0) UT scheduling RC: 0 with 130 bytes /Select RC priority
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 1) UT scheduling RC: 0 with 130 bytes /Try multiple times to allocate RC0’s capacity
 SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 2) UT scheduling RC: 0 with 130 bytes
-SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 3) Created a packet from RC: 3 size: 10 Created a packet from RC: 3 size: 119
-SatUtScheduler:DoScheduling(0x58ab35b1e030, 130, 0, 1) UT scheduling RC: 0 with 130 bytes
-SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b1e030, 130, 0)
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b0d1e0, 130, 3) Created a packet from RC: 3 size: 10 Created a packet from RC: 3 size: 119 /Actual packet creation (RC3’s data inside RC0’s allocation)
+SatUtScheduler:DoScheduling(0x58ab35b1e030, 130, 0, 1) UT scheduling RC: 0 with 130 bytes /Return to the main scheduling flow with RC0’s allocation result
+SatUtScheduler:DoSchedulingForRcIndex(0x58ab35b348b0, 115, 3) /The scheduler is processing Resource Channel (RC) index 3, with 115 bytes available in this TBTP.
+130 Bytes allocated within TBTP
+115 Bytes allocated within TBTP /The actual slots allocated in each TBTP burst.
 ```
-- 
+<img width="371" height="506" alt="image" src="https://github.com/user-attachments/assets/c23fef8d-cfab-4220-a781-f3526153e598" />
+
