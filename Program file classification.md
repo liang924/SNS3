@@ -12,6 +12,7 @@
     - [Logon / Mobility](#logon--mobility)
 - [Generic / Utility](#generic--utility)
 
+> In the SNS3 examples, unless explicitly labeled as regeneration, the default satellite model is a transparent satellite (bent-pipe).
 ## Table
 <h3>SNS3 Example Programs (by Execution Side)</h3>
 
@@ -140,6 +141,7 @@
 * **sat-profiling-sim**: Profiling system performance.  
 * **sat-profiling-sim-tn8**: Profiling with TN8 configuration.  
 
+> tn(test note) -- Each TN defines a specific test scenario and a set of parameters.
 ---
 
 ### User Terminal (UT)
