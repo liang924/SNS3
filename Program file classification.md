@@ -1,7 +1,19 @@
-# 目錄
+# Table of Contents
+- [Table](#table)
 - [Detail content](#detail-content)
+  - [🛰️ Satellite-side](#-satellite-side)
+  - [🌐 Gateway-side](#-gateway-side)
+  - [📡 User Terminal (UT)](#-user-terminal-ut)
+    - [ARQ](#-arq-automatic-repeat-request)
+    - [CBR / Traffic](#-cbr--traffic)
+    - [DAMA](#-dama-demand-assigned-multiple-access)
+    - [Random Access](#-random-access)
+    - [LoRa / IoT](#-lora--iot)
+    - [Logon / Mobility](#-logon--mobility)
+- [🛠️ Generic / Utility](#-generic--utility)
 
-<h2>SNS3 Example Programs (by Execution Side)</h2>
+## Table
+<h3>SNS3 Example Programs (by Execution Side)</h3>
 
 <table>
   <tr>
@@ -97,3 +109,99 @@
 </table>
 
 ## Detail content
+
+### 🛰️ Satellite-side
+
+* **sat-beam-position-tracer**: Trace satellite beam pointing positions.  
+* **sat-dynamic-frequency-plan-example**: Demonstrates dynamic frequency planning.  
+* **sat-essa-example**: Environmental Satellite Systems Analysis.  
+* **sat-fwd-link-beam-hopping-example**: Forward link beam hopping scenario.  
+* **sat-fwd-system-test-example**: Full forward link system test.  
+* **sat-mobility-beam-tracer**: Visualize beam coverage under mobility.  
+* **sat-mobility-example**: Simulate satellite or user mobility.  
+* **sat-mobility-position-generator**: Generate positions/trajectories for users or satellites.  
+* **sat-rayleigh-example**: Apply Rayleigh fading channel model.  
+* **sat-constellation-example**: Multi-satellite constellation setup.  
+* **sat-regeneration-example**: Regenerative satellite payload demonstration.  
+* **sat-regeneration-collisions-example**: Regenerative payload with collision modeling.  
+* **sat-vhts-example**: Very High Throughput Satellite case study.  
+* **sat-trace-input-external-fading-example**: Use external fading trace as input.  
+* **sat-trace-input-fading-example**: General fading trace input.  
+* **sat-trace-input-interference-example**: Trace-based interference modeling.  
+* **sat-trace-input-rx-power-example**: Trace-based received power input.  
+
+---
+
+### 🌐 Gateway-side
+
+* **sat-gw-handover-example**: Gateway handover scenario.  
+* **sat-handover-example**: General handover process.  
+* **sat-rtn-system-test-example**: Return link end-to-end test.  
+* **sat-profiling-sim**: Profiling system performance.  
+* **sat-profiling-sim-tn8**: Profiling with TN8 configuration.  
+
+---
+
+### 📡 User Terminal (UT)
+
+#### 🔹 ARQ (Automatic Repeat reQuest)
+* **sat-arq-fwd-example**: ARQ on forward link.  
+* **sat-arq-rtn-example**: ARQ on return link.  
+
+#### 🔹 CBR / Traffic
+* **sat-cbr-example**: Simple constant bit rate traffic.  
+* **sat-cbr-full-example**: Full CBR traffic setup.  
+* **sat-cbr-stats-example**: Collect statistics for CBR flows.  
+* **sat-cbr-user-defined-example**: User-defined CBR traffic.  
+* **sat-onoff-example**: On/Off traffic pattern.  
+* **sat-nrtv-example**: Non-real-time video traffic.  
+* **sat-multi-application-fwd-example**: Multiple applications on forward link.  
+* **sat-multi-application-rtn-example**: Multiple applications on return link.  
+* **sat-multicast-example**: Multicast service example.  
+* **sat-http-example**: HTTP traffic simulation.  
+* **sat-iot-example**: IoT traffic scenario.  
+
+#### 🔹 DAMA (Demand Assigned Multiple Access)
+* **sat-dama-http-sim-tn9**: HTTP with DAMA access (TN9).  
+* **sat-dama-onoff-sim-tn9**: On/Off traffic with DAMA (TN9).  
+* **sat-dama-sim-tn9**: Generic DAMA simulation (TN9).  
+* **sat-dama-verification-sim**: Verification of DAMA scheduler.  
+
+#### 🔹 Random Access
+* **sat-random-access-crdsa-collision-example**: CRDSA with collisions.  
+* **sat-random-access-crdsa-example**: CRDSA access scheme.  
+* **sat-random-access-dynamic-load-control-example**: Random access with load control.  
+* **sat-random-access-example**: Basic random access example.  
+* **sat-random-access-slotted-aloha-collision-example**: Slotted ALOHA with collisions.  
+* **sat-random-access-slotted-aloha-example**: Basic slotted ALOHA.  
+* **sat-ra-sim-tn9**: Random access simulation (TN9).  
+* **sat-ra-sim-tn9-comparison**: Compare RA configurations (TN9).  
+* **sat-rtn-link-da-example**: Return link with demand assignment.  
+* **sat-rtn-link-ra-example**: Return link with random access.  
+
+#### 🔹 LoRa / IoT
+* **sat-lora-constellation-example**: LoRa with satellite constellation.  
+* **sat-lora-example**: Basic LoRa system.  
+* **sat-lora-handover-example**: LoRa mobility with handover.  
+* **sat-lora-regenerative-example**: LoRa with regenerative payload.  
+
+#### 🔹 Logon / Mobility
+* **sat-log-example**: General log tracing.  
+* **sat-logon-example**: User terminal logon procedure.  
+
+---
+
+### 🛠️ Generic / Utility
+
+* **sat-generic-launcher**: General launcher for scenarios.  
+* **sat-group-example**: Group communications.  
+* **sat-link-budget-example**: Link budget calculation.  
+* **sat-link-results-plot**: Plot link performance results.  
+* **sat-list-position-ext-fading-example**: Position list with external fading.  
+* **sat-loo-example**: Loo fading channel model.  
+* **sat-markov-fading-trace-example**: Markov chain fading trace.  
+* **sat-markov-logic-example**: Logic-based Markov process.  
+* **sat-per-packet-if-sim-tn9**: Per-packet interface simulation (TN9).  
+* **sat-trace-output-example**: Trace output example.  
+* **sat-training-example**: Training/demo scenario.  
+* **sat-tutorial-example**: Tutorial example for beginners.  
