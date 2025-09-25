@@ -1,5 +1,5 @@
 # 目錄
-- [跳到 Detail content](#detail-content)
+- [Detail content](#detail-content)
 
 <h2>SNS3 Example Programs (by Execution Side)</h2>
 
