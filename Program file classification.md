@@ -1,16 +1,16 @@
 # Table of Contents
 - [Table](#table)
 - [Detail content](#detail-content)
-  - [🛰️ Satellite-side](#-satellite-side)
-  - [🌐 Gateway-side](#-gateway-side)
-  - [📡 User Terminal (UT)](#-user-terminal-ut)
-    - [ARQ](#-arq-automatic-repeat-request)
-    - [CBR / Traffic](#-cbr--traffic)
-    - [DAMA](#-dama-demand-assigned-multiple-access)
-    - [Random Access](#-random-access)
-    - [LoRa / IoT](#-lora--iot)
-    - [Logon / Mobility](#-logon--mobility)
-- [🛠️ Generic / Utility](#-generic--utility)
+  - [Satellite-side](#satellite-side)
+  - [Gateway-side](#gateway-side)
+  - [User Terminal (UT)](#user-terminal-ut)
+    - [ARQ](#arq-automatic-repeat-request)
+    - [CBR / Traffic](#cbr--traffic)
+    - [DAMA](#dama-demand-assigned-multiple-access)
+    - [Random Access](#random-access)
+    - [LoRa / IoT](#lora--iot)
+    - [Logon / Mobility](#logon--mobility)
+- [Generic / Utility](#generic--utility)
 
 ## Table
 <h3>SNS3 Example Programs (by Execution Side)</h3>
@@ -110,7 +110,7 @@
 
 ## Detail content
 
-### 🛰️ Satellite-side
+### Satellite-side
 
 * **sat-beam-position-tracer**: Trace satellite beam pointing positions.  
 * **sat-dynamic-frequency-plan-example**: Demonstrates dynamic frequency planning.  
@@ -132,7 +132,7 @@
 
 ---
 
-### 🌐 Gateway-side
+### Gateway-side
 
 * **sat-gw-handover-example**: Gateway handover scenario.  
 * **sat-handover-example**: General handover process.  
@@ -142,13 +142,13 @@
 
 ---
 
-### 📡 User Terminal (UT)
+### User Terminal (UT)
 
-#### 🔹 ARQ (Automatic Repeat reQuest)
+#### ARQ (Automatic Repeat reQuest)
 * **sat-arq-fwd-example**: ARQ on forward link.  
 * **sat-arq-rtn-example**: ARQ on return link.  
 
-#### 🔹 CBR / Traffic
+#### CBR / Traffic
 * **sat-cbr-example**: Simple constant bit rate traffic.  
 * **sat-cbr-full-example**: Full CBR traffic setup.  
 * **sat-cbr-stats-example**: Collect statistics for CBR flows.  
@@ -161,13 +161,13 @@
 * **sat-http-example**: HTTP traffic simulation.  
 * **sat-iot-example**: IoT traffic scenario.  
 
-#### 🔹 DAMA (Demand Assigned Multiple Access)
+#### DAMA (Demand Assigned Multiple Access)
 * **sat-dama-http-sim-tn9**: HTTP with DAMA access (TN9).  
 * **sat-dama-onoff-sim-tn9**: On/Off traffic with DAMA (TN9).  
 * **sat-dama-sim-tn9**: Generic DAMA simulation (TN9).  
 * **sat-dama-verification-sim**: Verification of DAMA scheduler.  
 
-#### 🔹 Random Access
+#### Random Access
 * **sat-random-access-crdsa-collision-example**: CRDSA with collisions.  
 * **sat-random-access-crdsa-example**: CRDSA access scheme.  
 * **sat-random-access-dynamic-load-control-example**: Random access with load control.  
@@ -179,19 +179,19 @@
 * **sat-rtn-link-da-example**: Return link with demand assignment.  
 * **sat-rtn-link-ra-example**: Return link with random access.  
 
-#### 🔹 LoRa / IoT
+#### LoRa / IoT
 * **sat-lora-constellation-example**: LoRa with satellite constellation.  
 * **sat-lora-example**: Basic LoRa system.  
 * **sat-lora-handover-example**: LoRa mobility with handover.  
 * **sat-lora-regenerative-example**: LoRa with regenerative payload.  
 
-#### 🔹 Logon / Mobility
+#### Logon / Mobility
 * **sat-log-example**: General log tracing.  
 * **sat-logon-example**: User terminal logon procedure.  
 
 ---
 
-### 🛠️ Generic / Utility
+### Generic / Utility
 
 * **sat-generic-launcher**: General launcher for scenarios.  
 * **sat-group-example**: Group communications.  
