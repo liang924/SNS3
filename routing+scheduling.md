@@ -119,7 +119,8 @@ SatIdMapper GW/UT MAC to satellite ID map
   - `...:1a` → belongs to SAT 1.
   - `...:0c` (UT 4) → belongs to SAT 0.
 
-<img width="1192" height="573" alt="image" src="https://github.com/user-attachments/assets/878ed92f-46da-474a-9d68-4f27292d9f7f" />
+<img width="1201" height="472" alt="image" src="https://github.com/user-attachments/assets/43ef1689-5cfe-4149-91f6-6fabd7bb39e7" />
+
 
 
 
