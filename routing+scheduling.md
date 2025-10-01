@@ -51,6 +51,9 @@ SAT: ID = 1, at -0.0219759,47.7047,3.5779e+07   # Satellite with ID=1, located a
       02-06-00:00:00:00:00:24 to SAT 0          # ISL from device :24 on this satellite to satellite ID=0
 
 ```
+<img width="591" height="207" alt="image" src="https://github.com/user-attachments/assets/d3a2fd57-142c-488e-9670-d566dc4c590b" />
+
+[EN 301 545-2](https://www.etsi.org/deliver/etsi_en/301500_301599/30154502/01.04.00_20/en_30154502v010400a.pdf)
 
 ### 2. Gateways (GWs)
 ```
@@ -116,7 +119,8 @@ SatIdMapper GW/UT MAC to satellite ID map
   - `...:1a` → belongs to SAT 1.
   - `...:0c` (UT 4) → belongs to SAT 0.
 
-<img width="1086" height="453" alt="image" src="https://github.com/user-attachments/assets/b9d0444d-7342-4482-b0ce-76995f5f15c5" />
+<img width="1192" height="573" alt="image" src="https://github.com/user-attachments/assets/878ed92f-46da-474a-9d68-4f27292d9f7f" />
+
 
 
 
