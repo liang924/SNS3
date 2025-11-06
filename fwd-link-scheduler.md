@@ -293,3 +293,121 @@ Functions:
 - Check whether a frame matches the C/N0 (CnoMatchWithFrame)
 - Get the C/N0 estimation of a UT (GetSchedulingObjectCno)
 - Create a C/N0 estimator (CreateCnoEstimator)
+
+
+## Note
+# 🛰️ Forward Link Scheduling — Key Summary
+
+## 🔹 1. Function and Role
+The **Forward Link Scheduler** in SNS-3 controls **data transmission from the Gateway to User Terminals (UTs)** using **BBFrames (Base-Band Frames)**.
+
+It determines:
+- How packets are packed into BBFrames  
+- Which **Modulation and Coding (MODCOD)** scheme to use  
+- When to transmit frames according to traffic demand and link quality  
+
+> *(The return link’s capacity control is covered separately under “Resource Management.”)*
+
+---
+
+## 🔹 2. System Architecture and Core Classes
+
+| Class | Description |
+|--------|-------------|
+| `SatFwdLinkScheduler` | Abstract base class defining the common scheduler interface |
+| `SatFwdLinkSchedulerDefault` | Default scheduler with a single BBFrame container |
+| `SatFwdLinkSchedulerTimeSlicing` | Advanced scheduler supporting time slicing |
+| `SatBbFrameConf` | Defines BBFrame configuration (MODCODs, frame types) |
+| `SatBbFrameContainer` | Holds BBFrames ready for transmission |
+| `SatDvbS2Waveform` | Represents a DVB-S2/S2X waveform (MODCOD, frame type, duration) |
+
+---
+
+## 🔹 3. Default Scheduler
+
+### ⚙️ Operation
+1. The **periodic timer** expires → triggers `PeriodicTimerExpired()`.  
+2. Calls `ScheduleBbFrames()` to prepare new frames.  
+3. Requests scheduling objects from the **LLC layer**.  
+4. For each object:
+   - Selects the proper **MODCOD**.
+   - Checks for available space in the current BBFrame.
+   - Requests packets and appends them into the BBFrame.
+5. When the Gateway MAC requests a frame (`GetNextFrame()`), it returns the next ready BBFrame from the container.
+
+### 📊 Configuration Parameters
+
+| Parameter | Description | Default |
+|------------|-------------|----------|
+| `SchedulingStartThresholdTime` | Time threshold to start scheduling | 5 ms |
+| `SchedulingStopThresholdTime` | Time threshold to stop scheduling | 15 ms |
+| `PeriodicInterval` | Periodic scheduling interval | Custom |
+| `BBFrameContainer` | Frame container used by scheduler | — |
+
+> ✅ Best for **basic or single-user simulations** where time slicing is not needed.
+
+---
+
+## 🔹 4. Time Slicing Scheduler
+
+### 🧩 Concept
+- Divides total **carrier bandwidth** into multiple **time slices**.  
+- Each slice owns a portion of the total **symbol rate**.  
+- UTs are assigned to specific slices → prevents interference and ensures fairness.  
+
+| Slice | Purpose |
+|--------|----------|
+| Slice 0 | Control and broadcast (shared by all UTs) |
+| Slice 1–N | User data transmission (each UT mapped to one slice) |
+
+### ⚙️ Implementation Details
+- When a new UT joins, it is assigned to a slice via **Round-Robin** allocation.  
+- The scheduler tracks the number of symbols per slice to **maintain the symbol rate limit**.  
+- If a slice exceeds its allocation, new BBFrames are not opened.
+
+> **Formula:**  
+> `Slice Symbol Rate = Total Carrier Bandwidth / Number of Slices`
+
+### 📊 Configuration Parameters
+
+| Parameter | Description | Default |
+|------------|-------------|----------|
+| `NumberOfSlices` | Number of slices | 1 |
+| `PeriodicInterval` | Scheduling interval | Custom |
+
+> ✅ Used for **multi-user or multi-service simulations** to allocate bandwidth fairly.
+
+---
+
+## 🔹 5. BBFrame Configuration
+
+### 📦 Description
+A **BBFrame** is the fundamental transmission unit in DVB-S2/DVB-S2X.  
+The `SatBbFrameConf` class defines its properties:
+- MODCOD scheme  
+- Frame type (NORMAL / SHORT / DUMMY)  
+- Duration and modulation settings  
+
+### 💡 Supported MODCOD Examples
+
+| Modulation | Coding Rate | DVB Version |
+|-------------|--------------|--------------|
+| QPSK 1/2 | DVB-S2 |
+| QPSK 3/5 | DVB-S2 |
+| 8PSK 3/5 | DVB-S2 |
+| 16APSK 2/3 | DVB-S2 |
+| 32APSK 3/4 | DVB-S2 |
+| … | … | … |
+
+### 🧩 Frame Types
+
+| Type | Description |
+|-------|--------------|
+| **NORMAL_FRAME** | Standard frame, larger payload |
+| **SHORT_FRAME** | Shorter frame, smaller payload |
+| **DUMMY_FRAME** | Empty frame used when no data is available |
+
+### 📘 DVB Version
+Supports both **DVB-S2** and **DVB-S2X**, selectable via:
+```cpp
+typedef enum { DVB_S2, DVB_S2X } DvbVersion_t;
